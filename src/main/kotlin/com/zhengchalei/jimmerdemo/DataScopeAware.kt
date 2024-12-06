@@ -9,8 +9,8 @@ import org.babyfish.jimmer.sql.MappedSuperclass
 interface DataScopeAware {
 
     @ManyToOne
-    @JoinColumn(name = "author_id") val author: Author
+    @JoinColumn(name = "author_id") val author: Author?
 
-    @IdView("author") val authorId: Int
+    @IdView("author") val authorId: Int?
 
 }

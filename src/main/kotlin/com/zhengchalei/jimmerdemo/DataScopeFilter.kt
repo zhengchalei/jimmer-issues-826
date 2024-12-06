@@ -42,5 +42,7 @@ class DataScopeFilter() : KAssociationIntegrityAssuranceFilter<DataScopeAware> {
             )
         }
 
+        // 3. success
+//        args.apply { where(table.authorId eq authorId) }
     }
 }
