@@ -9,6 +9,7 @@ package com.zhengchalei.jimmerdemo
 
 import org.babyfish.jimmer.sql.kt.ast.expression.eq
 import org.babyfish.jimmer.sql.kt.ast.expression.exists
+import org.babyfish.jimmer.sql.kt.ast.expression.valueIn
 import org.babyfish.jimmer.sql.kt.filter.KAssociationIntegrityAssuranceFilter
 import org.babyfish.jimmer.sql.kt.filter.KFilterArgs
 import org.springframework.stereotype.Component
@@ -34,12 +35,12 @@ class DataScopeFilter() : KAssociationIntegrityAssuranceFilter<DataScopeAware> {
 
         // 2. Table join is disabled because it is not allowed by cacheable filter
         args.apply {
-            exists(
-                wildSubQuery(Author::class) {
-                    where(table.id eq parentTable.author.id)
-                    where(table.id eq authorId)
-                }
-            )
+           where(
+               table.author.id valueIn subQuery(Author::class) {
+                   where(table.id eq authorId)
+                   select(table.id)
+               }
+           )
         }
 
         // 3. success
